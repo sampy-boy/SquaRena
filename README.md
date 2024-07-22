@@ -1,6 +1,6 @@
 # SquaRena VER(1.0)
 ------Made by sampy-boy------
-Download/Open HTML file to start
+Download HTML and JS file then open HTML to start
 then press space to play
 -----------------------------
 
