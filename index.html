@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SquaRena V0.9</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            height: 100%;
+            width: 100%;
+            background-color: black;
+        }
+
+        h1 {
+            text-align: left; 
+            margin: 20px;  
+            color: #ffffff; 
+            font-family: 'Helvetica', Arial, sans-serif;  
+            font-size: 36px;  
+            font-weight: bold;
+        }
+
+        canvas {
+            margin: 0 auto; 
+        }
+
+        label {
+            text-align: left;
+            color: #ffffff;
+        }
+
+        select {
+            text-align: left;
+            color: #000000;
+        }
+
+        button {
+            font-size: 16px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <h1>Customization</h1>
+    <label for="color">Player 1 Color:</label>
+
+    <select name="P1 color" id="color">
+        <option value="5">Blue</option>
+        <option value="1">Red</option>
+        <option value="7">White</option>
+        <option value="4">Green</option>
+        <option value="3">Yellow</option>
+        <option value="2">Orange</option>
+        <option value="6">Purple</option>
+      </select>
+
+    <label for="color2">Player 2 Color:</label>
+
+    <select name="P2 color" id="color2">
+        <option value="1">Red</option>
+        <option value="5">Blue</option>
+        <option value="7">White</option>
+        <option value="4">Green</option>
+        <option value="3">Yellow</option>
+        <option value="2">Orange</option>
+        <option value="6">Purple</option>
+      </select>
+
+
+
+    <div class="slider-container">
+        <label for="speedSlider">Player Speed:</label>
+        <input type="range" id="speedSlider" min="1" max="10" value="5">
+        <span id="speedValue">5</span>
+    </div>
+
+    <div class="slider-container">
+        <label for="sizeSlider">Player Size:</label>
+        <input type="range" id="sizeSlider" min="50" max="150" value="100">
+        <span id="sizeValue">100</span>
+    </div> 
+
+    <input type="checkbox" id="healon" name="heal?" value="true" checked>
+    <label for="healon"> Heals</label>
+
+    <input type="checkbox" id="invon" name="inv?" value="true" checked>
+    <label for="invon"> Invincibilitys</label>
+
+    <input type="checkbox" id="spdon" name="spd?" value="true" checked>
+    <label for="spdon"> Speed ups</label>
+
+    <input type="checkbox" id="slwon" name="slw?" value="true" checked>
+    <label for="slwon"> Slow downs</label> 
+
+    <br>
+
+    <button id="readValuesButton">Set properties</button>
+
+    <canvas id="canvas"></canvas>
+    <script src="script.js"></script>
+</body>
+</html>
