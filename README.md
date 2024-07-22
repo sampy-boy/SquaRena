@@ -32,4 +32,5 @@ It is risky because it wont allow the square to get powerups and can even eject 
 Once the square is out of the wall, it usually gives them a massive UNCAPPED speedboost.
 
 -----------------------------
+After one square dies reload the page to restart
 
