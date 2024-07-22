@@ -15,6 +15,9 @@ let initspeed = 5;
 
 let initsize = 100;
 
+let sound = 1;
+let spawnrate = 1;
+
 let powerups = {inv: true, heal: true, speed: true, slow: true};
 
 let square1 = { x: canvas.width / 3.5, y: canvas.height / 2.85, color: '#46caf2', size: initsize, health: 1, xvel: 1, yvel: -1, inv: false};
@@ -93,6 +96,16 @@ function detectBorderCollision(squareWithBorder, otherSquare) {
 return 0;
 }
 
+function playSound() {
+    if (sound == 1){
+        const audio = new Audio('assets/hit1.wav');
+        audio.play();
+    } else if (sound == 2){
+        const audio = new Audio('assets/hit2.mp3');
+        audio.play();
+    }
+}
+
 function drawBorder(x, y, width, height, borderColor, color, borderWidth) {
     ctx.fillStyle = color;
     ctx.fillRect(x, y, width, height);
@@ -130,7 +143,7 @@ function drawSquares() {
 }
 
 function generateHeal() {
-    if (Math.floor(Math.random() * 20) == 1 && !healthonscreen && powerups.heal){
+    if (Math.floor(Math.random() * 20 * spawnrate) == 1 && !healthonscreen && powerups.heal){
         if (square1.health < 1 || square2.health < 1){
             healthonscreen = true;
             const borderX = borderSquare.x;
@@ -145,7 +158,7 @@ function generateHeal() {
 }
 
 function generateInv() {
-    if (Math.floor(Math.random() * 100) == 1 && !invonscreen && powerups.inv){
+    if (Math.floor(Math.random() * 100 * spawnrate) == 1 && !invonscreen && powerups.inv){
         if (square1.health < 1 || square2.health < 1){
             invonscreen = true;
             const borderX = borderSquare.x;
@@ -160,7 +173,7 @@ function generateInv() {
 }
 
 function generateSpeed() {
-    if (Math.floor(Math.random() * 400) == 1 && !speedonscreen && powerups.speed){
+    if (Math.floor(Math.random() * 400 * spawnrate) == 1 && !speedonscreen && powerups.speed){
 
         speedonscreen = true;
         const borderX = borderSquare.x;
@@ -174,7 +187,7 @@ function generateSpeed() {
 }
 
 function generateSlow() {
-    if (Math.floor(Math.random() * 400) == 1 && !slowonscreen && powerups.slow){
+    if (Math.floor(Math.random() * 400 * spawnrate) == 1 && !slowonscreen && powerups.slow){
 
         slowonscreen = true;
         const borderX = borderSquare.x;
@@ -278,8 +291,10 @@ function updateSquares() {
         const bordercol1 = detectBorderCollision(borderSquare, square1);
         if (bordercol1 !== 0) {
             if (bordercol1 === 1 || bordercol1 === 2) {
+                playSound();
                 square1.xvel = returnRandomVector2(chaosMin, chaosMax, square1.xvel);
             } else {
+                playSound();
                 square1.yvel = returnRandomVector2(chaosMin, chaosMax, square1.yvel);
             }
         }
@@ -288,8 +303,10 @@ function updateSquares() {
         const bordercol2 = detectBorderCollision(borderSquare, square2);
         if (bordercol2 !== 0) {
             if (bordercol2 === 1 || bordercol2 === 2) {
+                playSound();
                 square2.xvel = returnRandomVector2(chaosMin, chaosMax, square2.xvel);
             } else {
+                playSound();
                 square2.yvel = returnRandomVector2(chaosMin, chaosMax, square2.yvel);
             }
         }
@@ -297,11 +314,13 @@ function updateSquares() {
         if (isSquareCollision(square1, square2)){
             
             if (square1.x + square1.size >= square2.x && square1.x <= square2.x + square2.size) {
+                playSound();
                 square1.xvel = returnRandomVector2(chaosMin, chaosMax, square1.xvel);
                 square2.xvel = returnRandomVector2(chaosMin, chaosMax, square2.xvel);
             }
             
             if (square1.y + square1.size >= square2.y && square1.y <= square2.y + square2.size) {
+                playSound();
                 square1.yvel = returnRandomVector2(chaosMin, chaosMax, square1.yvel);
                 square2.yvel = returnRandomVector2(chaosMin, chaosMax, square2.yvel);
             }
@@ -391,6 +410,7 @@ draw();
 document.getElementById('readValuesButton').addEventListener('click', function() {
     const col1 = document.getElementById('color').value;
     const col2 = document.getElementById('color2').value;
+    sound = document.getElementById('sound').value;
 
     square1.color = colorconver[col1];
     square2.color = colorconver[col2];
@@ -404,6 +424,7 @@ document.getElementById('readValuesButton').addEventListener('click', function()
     initspeed = parseFloat(document.getElementById('speedSlider').value);
     speed1 = parseFloat(document.getElementById('speedSlider').value);
     speed2 = parseFloat(document.getElementById('speedSlider').value);
+    spawnrate = 2.1 - parseFloat(document.getElementById('spawnSlider').value)
     console.log(initspeed);
 
 });
