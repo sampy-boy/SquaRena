@@ -3,6 +3,7 @@ const ctx = canvas.getContext('2d');
 
 
 const colorconver = {'5': '#46caf2', '2': '#eb8f34', '3': '#ffb700', '4': '#7bff00', '1': '#f25a46', '6': '#8800ff', '7': '#ffffff'}
+const lowcolor = {'#46caf2': '#3eadcf', '#eb8f34': '#bf742a', '#ffb700': '#db9d00', '#7bff00': '#5bbd00', '#f25a46': '#ba4434', '#8800ff': '#6500bd', '#ffffff': '#d1d1d1'}
 
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
@@ -20,8 +21,8 @@ let spawnrate = 1;
 
 let powerups = {inv: true, heal: true, speed: true, slow: true};
 
-let square1 = { x: canvas.width / 3.5, y: canvas.height / 2.85, color: '#46caf2', size: initsize, health: 1, xvel: 1, yvel: -1, inv: false};
-let square2 = { x: canvas.width / 1.525, y: canvas.height / 2.5, color: '#f25a46', size: initsize, health: 1, xvel: -1, yvel: 1, inv: false};
+let square1 = { x: canvas.width / 3.5, y: canvas.height / 2.85, color: '#46caf2', size: initsize, health: 1, xvel: 1, yvel: -1, inv: false, border: 10};
+let square2 = { x: canvas.width / 1.525, y: canvas.height / 2.5, color: '#f25a46', size: initsize, health: 1, xvel: -1, yvel: 1, inv: false, border: 10};
 
 let borderSquare = { x: canvas.width / 4, y: 5, size: canvas.width / 2, border: 5 };
 
@@ -56,7 +57,7 @@ let slowonscreen = false;
 let slow = {x: 0, y: 0, size: slowsize};
 
 function isSquareCollision(square1, square2) {
-    const buffer = 2;
+    const buffer = 5;   
     return !(
       square1.x + square1.size - buffer < square2.x ||
       square1.x + buffer > square2.x + square2.size ||
@@ -126,19 +127,27 @@ function drawSquares() {
     if (square1.health > 0){
         if (square1.inv){
             ctx.fillStyle = invcolor;
+            ctx.strokeStyle = "#c99938"
         } else {
             ctx.fillStyle = square1.color;
+            ctx.strokeStyle = lowcolor[square1.color];
         }
+        ctx.lineWidth = square1.border;
         ctx.fillRect(square1.x, square1.y, square1.size, square1.size);
+        ctx.strokeRect(square1.x, square1.y, square1.size, square1.size);
     }
 
     if (square2.health > 0){
         if (square2.inv){
             ctx.fillStyle = invcolor;
+            ctx.strokeStyle = "#c99938"
         } else {
             ctx.fillStyle = square2.color;
+            ctx.strokeStyle = lowcolor[square2.color];
         }
+        ctx.lineWidth = square2.border;
         ctx.fillRect(square2.x, square2.y, square2.size, square2.size);
+        ctx.strokeRect(square2.x, square2.y, square2.size, square2.size);
     }
 }
 
@@ -237,30 +246,39 @@ function draw() {
         generateInv();
         generateSpeed();
         generateSlow();
+        ctx.lineWidth = 3;
         if (healthonscreen) {
             ctx.fillStyle = healthcolor;
+            ctx.strokeStyle = '#34c955'
             ctx.fillRect(health.x, health.y, healthsize, healthsize);
+            ctx.strokeRect(health.x, health.y, healthsize, healthsize);
         } else {
             health.x = 0;
             health.y = 0;
         }
         if (invonscreen) {
             ctx.fillStyle = invcolor;
+            ctx.strokeStyle = '#c79636'
             ctx.fillRect(inv.x, inv.y, invsize, invsize);
+            ctx.strokeRect(inv.x, inv.y, invsize, invsize);
         } else {
             inv.x = 0;
             inv.y = 0;
         }
         if (speedonscreen) {
             ctx.fillStyle = speedcolor;
+            ctx.strokeStyle = '#34c290'
             ctx.fillRect(speed.x, speed.y, speedsize, speedsize);
+            ctx.strokeRect(speed.x, speed.y, speedsize, speedsize);
         } else {
             speed.x = 0;
             speed.y = 0;
         }
         if (slowonscreen) {
             ctx.fillStyle = slowcolor;
+            ctx.strokeStyle = '#657370';
             ctx.fillRect(slow.x, slow.y, slowsize, slowsize);
+            ctx.strokeRect(slow.x, slow.y, slowsize, slowsize);
         } else {
             slow.x = 0;
             slow.y = 0;
@@ -385,6 +403,9 @@ function updateSquares() {
 
         square1.size = Math.min(initsize * (square1.health * 2), initsize);
         square2.size = Math.min(initsize * (square2.health * 2), initsize);
+
+        square1.border = (10 * square1.health) * (initsize / 100);
+        square2.border = (10 * square2.health) * (initsize / 100);
         
 }
     
