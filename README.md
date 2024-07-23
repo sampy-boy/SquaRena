@@ -1,4 +1,4 @@
-# SquaRena VER(1.0.9)
+# SquaRena VER(1.0.9.1)
 ------Made by sampy-boy------
 Download HTML, JS and assets folder then open HTML to start
 then press space to play
